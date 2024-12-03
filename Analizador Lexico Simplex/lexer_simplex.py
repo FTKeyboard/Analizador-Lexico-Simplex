@@ -5,7 +5,7 @@ from tkinter import filedialog
 
 # Definición de las palabras clave (reservadas)
 keywords = {
-    'if', 'else', 'while', 'for', 'return', 'int', 'float', 'string', 'true', 'false'
+    'if', 'else', 'while', 'for', 'return', 'int', 'float', 'string', 'true', 'false', 'then'
 }
 
 # Definición de los tokens
@@ -15,16 +15,16 @@ tokens = [
 ]
 
 # Expresiones regulares para los tokens
-t_KEYWORD = r'\b(if|else|while|for|return|int|float|string|true|false)\b'
-t_IDENTIFIER = r'[a-zA-Z_][a-zA-Z_0-9]*'
-t_INVALID_IDENTIFIER = r'(\d|[@$])[a-zA-Z_][a-zA-Z_0-9]*'
-t_OPERATOR = r'\+|\-|\*|\/|\=\=|\>|\<|\='  # Añadido el símbolo de asignación '='
-t_ASSIGNMENT_OPERATOR = r'\=\='  # Cambiado para ser exclusivo de comparación
-t_DELIMITER = r'\;|\{|\}|\(|\)'
-t_NUMBER = r'\d+\.\d+|\d+'
-t_STRING = r'\"[^\"]*\"'
-t_COMMENT = r'//.*'
-t_UNRECOGNIZED_SYMBOL = r'[\$\#]'
+t_KEYWORD = r'\b(if|else|while|for|return|int|float|string|true|false|then)\b'
+t_IDENTIFIER = r'[a-zA-Z_áéíóúÁÉÍÓÚ][a-zA-Z_0-9áéíóúÁÉÍÓÚ]*'  # Identificadores válidos
+t_INVALID_IDENTIFIER = r'(\d|[@$-])[a-zA-Z_áéíóúÁÉÍÓÚ][a-zA-Z_0-9áéíóúÁÉÍÓÚ]*'  # Identificadores inválidos
+t_OPERATOR = r'\+|\-|\*|\/|\=\=|\>|\<|\='  # Operadores matemáticos y de comparación
+t_ASSIGNMENT_OPERATOR = r'\='  # Operador de asignación
+t_DELIMITER = r'\;|\{|\}|\(|\)'  # Delimitadores
+t_NUMBER = r'\d+\.\d+|\d+'  # Números, con o sin decimales
+t_STRING = r'\"[^\"]*\"'  # Cadenas entre comillas
+t_COMMENT = r'//.*'  # Comentarios de una sola línea
+t_UNRECOGNIZED_SYMBOL = r'[\$\#]'  # Símbolos no reconocidos
 
 # Ignorar espacios, tabulaciones y saltos de línea
 t_ignore = ' \t\n'
@@ -45,10 +45,17 @@ lexer = lex.lex()
 
 # Función para analizar el archivo de entrada
 def analizar_archivo(archivo):
-    with open(archivo, 'r') as f:
+    with open(archivo, 'r', encoding='utf-8') as f:  # Se especifica la codificación 'utf-8'
         data = f.read()
+        
+        # Verificación del contenido leído
+        print("Contenido del archivo:")
+        print(data)
+        print("-" * 40)
+        
         lexer.input(data)
         tokens_generados = []
+        errores = []
 
         # Depuración: Imprimir el texto que se va a analizar
         print("Texto a analizar:")
@@ -65,13 +72,20 @@ def analizar_archivo(archivo):
         print("Tokens generados:")
         for token in tokens_generados:
             print(f'{token.type}: {token.value} en línea {token.lineno}, columna {find_column(token, data)}')
+
+        # Procesar errores
+        if errores:
+            print("Lista de errores:")
+            for error in errores:
+                print(f"Error en línea {error['line']}, columna {error['col']}: Símbolo no reconocido '{error['symbol']}'")
+
         print("-" * 40)
 
         return tokens_generados
 
 # Función para guardar los tokens en un archivo de salida
 def guardar_tokens(tokens, archivo_salida):
-    with open(archivo_salida, 'w') as f:
+    with open(archivo_salida, 'w', encoding='utf-8') as f:  # Se especifica la codificación 'utf-8' para la salida también
         for token in tokens:
             f.write(f'{token.type}: {token.value} en linea {token.lineno}, columna {find_column(token, f.name)}\n')
 
