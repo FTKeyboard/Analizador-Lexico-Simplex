@@ -1,0 +1,10 @@
+KEYWORD: int en linea 1, columna 1
+IDENTIFIER: x en linea 1, columna 5
+OPERATOR: = en linea 1, columna 7
+NUMBER: 5 en linea 1, columna 9
+DELIMITER: ; en linea 1, columna 10
+KEYWORD: float en linea 1, columna 12
+IDENTIFIER: y en linea 1, columna 18
+OPERATOR: = en linea 1, columna 20
+NUMBER: 3.14 en linea 1, columna 22
+DELIMITER: ; en linea 1, columna 26
