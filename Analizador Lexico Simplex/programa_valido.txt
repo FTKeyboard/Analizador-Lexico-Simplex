@@ -1,0 +1,8 @@
+//Programa válido en Simplex
+if (x == 10) {
+    y = x + 5.5;
+    z = "Texto de prueba";
+    while (y > 0) {
+        y -= 1;
+    }
+}
