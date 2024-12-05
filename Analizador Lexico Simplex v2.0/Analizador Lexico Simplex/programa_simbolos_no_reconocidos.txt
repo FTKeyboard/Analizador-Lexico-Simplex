@@ -1,0 +1,5 @@
+# Programa con símbolos no reconocidos
+if (x == 10) {
+    y = x + $;
+    z = "Texto con error" #;
+}

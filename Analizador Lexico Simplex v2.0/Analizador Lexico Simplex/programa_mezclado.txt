@@ -1,0 +1,8 @@
+# Programa mezclado
+if (x == 10) {
+    y = x + 5.5;
+    123var = "Identificador inválido";
+    while (y > #) {
+        y -= 1;
+    }
+}

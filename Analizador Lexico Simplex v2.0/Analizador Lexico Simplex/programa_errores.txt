@@ -1,0 +1,4 @@
+# Programa con errores en identificadores en simplex
+123variable = 10;     # Identificador no válido (comienza con un número)
+my-variable = 20;     # Identificador no válido (contiene un guion)
+@otroIdentificador = 5; # Identificador no válido (contiene un símbolo no permitido)
